@@ -1,0 +1,36 @@
+Problemas de Condiciones Simples
+Determinar si un número es par o impar
+
+Escribe un programa que solicite al usuario un número y determine si es par o impar.
+Determinar si una persona es mayor de edad
+
+Escribe un programa que solicite la edad de una persona y determine si es mayor de edad (18 años o más).
+Calificar un puntaje
+
+Escribe un programa que solicite un puntaje entre 0 y 100 y determine si es una calificación de aprobado (>=60) o reprobado (<60).
+Verificar si una letra es vocal o consonante
+
+Escribe un programa que solicite una letra y determine si es una vocal (a, e, i, o, u) o una consonante.
+
+Problemas de Condiciones Anidadas
+Categorizar una temperatura
+
+Escribe un programa que solicite una temperatura y determine si está "muy fría" (menos de 10°C), "fría" (entre 10°C y 20°C), "cálida" (entre 21°C y 30°C) o "caliente" (más de 30°C).
+Calificar un examen
+
+Escribe un programa que solicite un puntaje entre 0 y 100 y determine la calificación correspondiente:
+90-100: A
+80-89: B
+70-79: C
+60-69: D
+0-59: F
+Determinar el precio de un boleto
+
+Escribe un programa que solicite la edad de una persona y determine el precio de su boleto:
+Menores de 5 años: Gratis
+Entre 5 y 12 años: $5
+Entre 13 y 65 años: $10
+Mayores de 65 años: $7
+Clasificar un número como positivo, negativo o cero
+
+Escribe un programa que solicite un número y determine si es positivo, negativo o cero, y si es positivo, adicionalmente determina si es par o impar.
