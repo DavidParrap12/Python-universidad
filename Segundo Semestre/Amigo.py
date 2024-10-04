@@ -7,41 +7,41 @@ class Amigo:
         self.__instagram = instagram
         
         @property
-        def get_Nombre(self):
+        def getNombre(self):
             return self.__nombre
         def setNombre(self, nombre):
             self.__nombre = nombre
         
         @property
-        def get_Correo(self):
+        def getCorreo(self):
             return self.__correo
-        def set_Correo(self,correo):
+        def setCorreo(self,correo):
             self.__correo = correo
             
         @property
-        def get_Telefono(self):
+        def getTelefono(self):
             return self.__telefono
         
         def set_Telefono(self,telefono):
             self.__telefono = telefono
         
         @property
-        def get_Instagram(self):
+        def getInstagram(self):
             return self.__instagram
-        def set_Instagram(self,instagram):
+        def setInstagram(self,instagram):
             self.__instagram = instagram
             
-def ingresar_Datos(self):
-    nombre = input("Ingrese su nombre: ")
-    correo = input("Ingrese su correo: ")
-    telefono = int(input("Ingrese su numero telefonico: "))
-    instagram = input("Ingrese su usuario de Ig: ")
+    def ingresar_Datos(self):
+        self.__nombre = input("Ingrese su nombre: ")
+        self.__correo = input("Ingrese su correo: ")
+        self.__telefono = int(input("Ingrese su numero telefonico: "))
+        self.__instagram = input("Ingrese su usuario de Ig: ")
 
 
-nuevo_Amigo = Amigo(nombre, correo, telefono, instagram)
+nuevo_Amigo = Amigo("", "", 0, "")
 nuevo_Amigo.ingresar_Datos()
 
 Amigos.append(nuevo_Amigo)
 
 for amigo in Amigos:
-    print(f"Nombre: {amigo.get_nombre()}, Correo: {amigo.get_correo()}, Teléfono: {amigo.get_telefono()}, Instagram: {amigo.get_instagram()}")
+    print(f"Nombre: {amigo.get__nombre()}, Correo: {amigo.get_correo()}, Teléfono: {amigo.get_telefono()}, Instagram: {amigo.get_instagram()}")
