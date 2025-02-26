@@ -1,3 +1,4 @@
+from tkinter import messagebox, simpledialog
 #Clase principal
 class Usuario:
     # Contiene estos atributos
@@ -37,53 +38,86 @@ class RegistroUsuario:
 
     # Registro del usuario
     def registro(self):
-        nombre = input("Ingresa tu nombre: ")
-        codigo = int(input("Ingresa tu codigo: "))
-        fechaNacimiento = int(input("Ingresa tu año de nacimiento: "))
-        
+        nombre = simpledialog.askstring("Nombre", "Ingresa tu nombre:")
+        if not nombre:
+            messagebox.showerror("Error", "El nombre es obligatorio")
+            return
+
+        try:
+            codigo = int(simpledialog.askstring("Codigo", "Ingresa tu codigo:"))
+            fechaNacimiento = int(simpledialog.askstring("Fecha de Nacimiento", "Ingresa tu año de nacimiento:"))
+        except ValueError:
+            messagebox.showerror("Error", "El codigo y el año de nacimiento deben ser numeros enteros")
+            return
+
         creado = Usuario(nombre, codigo, fechaNacimiento)
         self.agregarUsuario(creado)
+        messagebox.showinfo("Exito", "Usuario registrado exitosamente")
+
     
     # Funcion para modificar un usuario
     def modificarUsuario(self):
-        codigo = int(input("Ingresa el codigo del usuario a modificar: "))
+        try:
+            codigo = int(simpledialog.askstring("Codigo", "Ingresa el codigo del usuario a modificar: "))
+        except ValueError:
+            messagebox.showerror("Error","El codigo debe ser un numero entero")    
+            return
+        
         for usuario in self.crear:
             if usuario.getCodigo() == codigo:
-                cambio = int(input("""Que modificacion deseas realizar:
-                1. Nombre
-                2. Codigo
-                3. Año de nacimiento """))
+                try:
+                    cambio = int(simpledialog.askstring("Modificar", """Que modificacion deseas realizar:
+                    1. Nombre
+                    2. Codigo
+                    3. Año de nacimiento """))
+                except ValueError:
+                    messagebox.showerror("Error", "La opcion debe ser un numero entero")
+                    return
+                
                 if cambio == 1:
-                    nuevo_nombre = input("Ingresa el nuevo nombre: ")
+                    nuevo_nombre = simpledialog.askstring("nombre", "Ingresa el nuevo nombre: ")
                     usuario.setNombre(nuevo_nombre)
                 elif cambio == 2:
-                    nuevo_codigo = int(input("Ingresa el nuevo codigo: "))
-                    usuario.setCodigo(nuevo_codigo)
+                    try:
+                        nuevo_codigo = int(simpledialog.askstring("Codigo", "Ingresa el nuevo codigo: "))
+                        usuario.setCodigo(nuevo_codigo)
+                    except ValueError:
+                        messagebox.showerror("Error", "El codigo debe ser un numero entero")
+                        return
                 elif cambio == 3:
-                    nuevo_anio = int(input("Ingresa el nuevo año de nacimiento: "))
-                    usuario.setFechaNacimiento(nuevo_anio)
-                return
-        print("Usuario no encontrado")
+                    try:
+                        nuevo_anio = int(simpledialog.askstring("Nombre", "Ingresa el nuevo año de nacimiento: "))
+                        usuario.setFechaNacimiento(nuevo_anio)
+                    except ValueError:
+                        messagebox.showerror("Error", "El año de nacimiento debe ser un numero entero")
+                    return
+            messagebox.showinfo("Exito", "Usuario modificado exitosamente")
+            return
+        messagebox.showerror("Error", "Usuario no encontrado")
     
     # Funcion para eliminar un usuario
     def eliminarUsuario(self):
-        codigo = int(input("Ingresa el codigo del usuario a eliminar: "))
+        try:
+            codigo = int(simpledialog.askstring("Codigo", "Ingresa el codigo del usuario a eliminar: "))
+        except ValueError:
+            messagebox.showerror("Error", "El codigo debe ser un numero entero")    
+            return
         usuario_encontrado = False
         for usuario in self.crear:
             if usuario.getCodigo() == codigo:
                 self.crear.remove(usuario)
                 usuario_encontrado = True
-                print("Usuario con codigo {codigo} eliminado. ")
+                messagebox.showinfo("Exito", f"Usuario con codigo {codigo} eliminado. ")
                 break
         if not usuario_encontrado:
-            print("Usuario no encontrado")
+            messagebox.showerror("Error", "Usuario no encontrado")
 
     
 
     # Funcion para listar los usuarios
     def listarUsuarios(self):
         for usuario in self.crear:
-            print(f"Nombre: {usuario.getNombre()}, Codigo: {usuario.getCodigo()}, Año de Nacimiento: {usuario.getFechaNacimiento()}")
+            messagebox.showinfo(f"Nombre: {usuario.getNombre()}, Codigo: {usuario.getCodigo()}, Año de Nacimiento: {usuario.getFechaNacimiento()}")
 
     # Funcion para mostrar el menu de opciones
     def menuOpciones(self):
