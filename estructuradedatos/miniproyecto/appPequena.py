@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 Sistema de Gestión de Supermercado
-----------------------------------
-Este módulo implementa la interfaz gráfica para un sistema de gestión de supermercado
+interfaz gráfica para un sistema de gestión de supermercado
 que incluye inicio de sesión, gestión de listas de compras y administración de colas.
 """
-
 from tkinter import *
 from tkinter import messagebox, simpledialog
 from backend import SistemaAcceso, ListaSupermercado, GestorColas
@@ -14,20 +12,15 @@ class AplicacionAcceso:
     """Clase que maneja la ventana de inicio de sesión y acceso al sistema principal."""
     
     def __init__(self, raiz):
-        """
-        Inicializa la aplicación de acceso.
-        
-        Args:
-            raiz: Ventana principal de Tkinter
-        """
+        """ raiz: Ventana principal de Tkinter"""
         self.raiz = raiz
         self.raiz.title("Sistema de Acceso")
         self.raiz.geometry("300x150")
         
-        # Inicializar sistema backend
+        # Inicializa sistema backend
         self.sistema_acceso = SistemaAcceso()
         
-        # Crear elementos de la interfaz gráfica
+        # Crea elementos de la interfaz gráfica
         self.marco = Frame(raiz)
         self.marco.pack(pady=20)
         
@@ -74,30 +67,30 @@ class AplicacionAcceso:
         Label(ventana_principal, text="Bienvenido al Sistema de Gestión de Supermercado", 
             font=("Arial", 14)).pack(pady=10)
         
-        # Inicializar gestores
+        # Inicializa gestores
         self.gestor_listas = ListaSupermercado()
         self.gestor_colas = GestorColas()
         
-        # Crear barra de menú
+        # Crea barra de menú
         barra_menu = Menu(ventana_principal)
         ventana_principal.config(menu=barra_menu)
         
-        # Crear menú de Listas
+        # Crea menú de Listas
         menu_listas = Menu(barra_menu, tearoff=0)
         barra_menu.add_cascade(label="Listas Supermercado", menu=menu_listas)
         
-        # Agregar opciones del menú Listas
+        # Agrega opciones del menú Listas
         menu_listas.add_command(label="Nueva Lista", command=lambda: self.crear_nueva_lista(ventana_principal))
         menu_listas.add_command(label="Ver Listas", command=lambda: self.ver_listas(ventana_principal))
         menu_listas.add_command(label="Editar Lista", command=lambda: self.editar_lista(ventana_principal))
         menu_listas.add_command(label="Eliminar Lista", command=lambda: self.eliminar_lista(ventana_principal))
         menu_listas.add_separator()
         
-        # Crear menú de Colas
+        # Crea menú de Colas
         menu_colas = Menu(barra_menu, tearoff=0)
         barra_menu.add_cascade(label="Sistema de Colas", menu=menu_colas)
         
-        # Agregar opciones del menú Colas
+        # Agrega opciones del menú Colas
         menu_colas.add_command(label="Cola de Cajas", command=lambda: self.gestionar_cola_cajas(ventana_principal))
         menu_colas.add_command(label="Cola de Atención al Cliente", command=lambda: self.gestionar_cola_servicio(ventana_principal))
         menu_colas.add_command(label="Cola de Entregas", command=lambda: self.gestionar_cola_entregas(ventana_principal))
@@ -108,20 +101,9 @@ class AplicacionAcceso:
         # Área de contenido principal
         self.marco_principal = Frame(ventana_principal)
         self.marco_principal.pack(fill=BOTH, expand=True, padx=20, pady=20)
-        
-        # Etiqueta de bienvenida
-        Label(self.marco_principal, text="Bienvenido al Sistema de Gestión de Supermercado", 
-            font=("Arial", 14)).pack(pady=20)
-
-        ventana_principal.mainloop()
 
     def crear_nueva_lista(self, ventana):
-        """
-        Crea una nueva lista de compras.
-        
-        Args:
-            ventana: Ventana padre
-        """
+        """ Crea una nueva lista de compras. """
         nombre = simpledialog.askstring("Nueva Lista", "Nombre de la lista:")
         if nombre:
             ventana_items = Toplevel(ventana)
@@ -145,12 +127,7 @@ class AplicacionAcceso:
             Button(marco_items, text="Guardar", command=guardar_items).pack(pady=10)
 
     def ver_listas(self, ventana):
-        """
-        Muestra todas las listas existentes.
-        
-        Args:
-            ventana: Ventana padre
-        """
+        """ Muestra todas las listas existentes."""
         listas = self.gestor_listas.obtener_todas_listas()
         ventana_vista = Toplevel(ventana)
         ventana_vista.title("Ver Listas")
@@ -165,12 +142,7 @@ class AplicacionAcceso:
             Label(marco, text="-"*50).pack(fill=X)
 
     def editar_lista(self, ventana):
-        """
-        Edita una lista existente.
-        
-        Args:
-            ventana: Ventana padre
-        """
+        """ Edita una lista existente."""
         listas = self.gestor_listas.obtener_todas_listas()
         if not listas:
             messagebox.showinfo("Info", "No hay listas para editar")
@@ -203,12 +175,7 @@ class AplicacionAcceso:
             messagebox.showerror("Error", "Lista no encontrada")
 
     def eliminar_lista(self, ventana):
-        """
-        Elimina una lista existente.
-        
-        Args:
-            ventana: Ventana padre
-        """
+        """Elimina una lista existente."""
         id_lista = simpledialog.askinteger("Eliminar Lista", "ID de la lista a eliminar:")
         if id_lista is not None:
             if self.gestor_listas.eliminar_lista(id_lista):
@@ -217,12 +184,7 @@ class AplicacionAcceso:
                 messagebox.showerror("Error", "Lista no encontrada")
 
     def gestionar_cola_cajas(self, ventana):
-        """
-        Gestiona la cola de cajas de pago.
-        
-        Args:
-            ventana: Ventana padre
-        """
+        """Gestiona la cola de cajas de pago."""
         ventana_cola = Toplevel(ventana)
         ventana_cola.title("Cola de Cajas")
         ventana_cola.geometry("400x300")
@@ -257,12 +219,7 @@ class AplicacionAcceso:
         etiqueta_estado.pack(pady=10)
 
     def gestionar_cola_servicio(self, ventana):
-        """
-        Gestiona la cola de atención al cliente.
-        
-        Args:
-            ventana: Ventana padre
-        """
+        """Gestiona la cola de atención al cliente."""
         ventana_cola = Toplevel(ventana)
         ventana_cola.title("Cola de Atención al Cliente")
         ventana_cola.geometry("400x300")
@@ -297,12 +254,7 @@ class AplicacionAcceso:
         etiqueta_estado.pack(pady=10)
 
     def gestionar_cola_entregas(self, ventana):
-        """
-        Gestiona la cola de entregas a domicilio.
-        
-        Args:
-            ventana: Ventana padre
-        """
+        """Gestiona la cola de entregas a domicilio."""
         ventana_cola = Toplevel(ventana)
         ventana_cola.title("Cola de Entregas")
         ventana_cola.geometry("400x300")
@@ -346,6 +298,7 @@ class AplicacionAcceso:
     Entregas: {tamaños['entregas']} pedidos"""
         messagebox.showinfo("Estado de Colas", mensaje_estado)
 
+"""Llamamos la aplicaciom¿n"""
 if __name__ == "__main__":
     raiz = Tk()
     app = AplicacionAcceso(raiz)

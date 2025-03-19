@@ -2,7 +2,7 @@
 """
 Backend del Sistema de Gestión de Supermercado
 ----------------------------------------------
-Este módulo implementa las clases de backend para el sistema:
+implementa las clases de backend para el sistema:
 - SistemaAcceso: Maneja la autenticación de usuarios
 - ListaSupermercado: Gestiona las listas de compras
 - GestorColas: Administra las diferentes colas del supermercado
@@ -11,9 +11,7 @@ Este módulo implementa las clases de backend para el sistema:
 from queue import Queue
 
 class SistemaAcceso:
-    """
-    Clase que maneja la autenticación de usuarios y control de intentos.
-    """
+    """Clase que maneja la autenticación de usuarios y control de intentos."""
     def __init__(self):
         """Inicializa el sistema de acceso con valores predeterminados."""
         self.intentos = 0
@@ -25,13 +23,9 @@ class SistemaAcceso:
     def verificar_credenciales(self, usuario, clave):
         """
         Verifica si las credenciales proporcionadas son válidas.
-        
         Args:
             usuario: Nombre de usuario
             clave: Contraseña
-            
-        Returns:
-            bool: True si las credenciales son válidas, False en caso contrario
         """
         # Registrar el intento de acceso
         self.cola_usuarios.put((usuario, clave))
