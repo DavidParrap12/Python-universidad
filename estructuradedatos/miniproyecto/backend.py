@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Backend del Sistema de Gestión de Supermercado
 ----------------------------------------------
@@ -11,9 +10,9 @@ implementa las clases de backend para el sistema:
 from queue import Queue
 
 class SistemaAcceso:
-    """Clase que maneja la autenticación de usuarios y control de intentos."""
+    """Esta clase se encarga de ver si el usuario puede entrar al sistema o no."""
     def __init__(self):
-        """Inicializa el sistema de acceso con valores predeterminados."""
+        """Arranca el sistema con valores por defecto."""
         self.intentos = 0
         self.cola_usuarios = Queue()
         self.usuario_valido = "admin"
@@ -21,16 +20,11 @@ class SistemaAcceso:
         self.max_intentos = 3
 
     def verificar_credenciales(self, usuario, clave):
-        """
-        Verifica si las credenciales proporcionadas son válidas.
-        Args:
-            usuario: Nombre de usuario
-            clave: Contraseña
-        """
-        # Registrar el intento de acceso
+        """Mira si el usuario y la clave son correctos."""
+        # Guardamos el intento
         self.cola_usuarios.put((usuario, clave))
         
-        # Verificar credenciales
+        # Vemos si es válido
         if usuario == self.usuario_valido and clave == self.clave_valida:
             return True
         else:
@@ -38,96 +32,44 @@ class SistemaAcceso:
             return False
     
     def obtener_intentos_restantes(self):
-        """
-        Calcula los intentos restantes antes del bloqueo.
-        
-        Returns:
-            int: Número de intentos restantes
-        """
+        """Cuenta cuántos intentos le quedan al usuario."""
         return self.max_intentos - self.intentos
     
     def ha_excedido_intentos(self):
-        """
-        Determina si se ha excedido el número máximo de intentos.
-        
-        Returns:
-            bool: True si se excedió el límite, False en caso contrario
-        """
+        """Mira si ya se pasó del límite de intentos."""
         return self.intentos >= self.max_intentos
 
 
 class ListaSupermercado:
-    """
-    Clase que gestiona la creación y mantenimiento de listas de compras.
-    """
+    """Esta clase maneja las listas de compras del supermercado."""
     def __init__(self):
-        """Inicializa el gestor de listas de supermercado."""
+        """Arranca con una lista vacía."""
         self.listas = {}
         self.id_actual = 1
 
     def agregar_lista(self, nombre, articulos):
-        """
-        Agrega una nueva lista de compras.
-        
-        Args:
-            nombre: Nombre de la lista
-            articulos: Lista de artículos
-            
-        Returns:
-            int: ID de la lista creada
-        """
+        """Añade una nueva lista de compras."""
         self.listas[self.id_actual] = {"nombre": nombre, "articulos": articulos}
         self.id_actual += 1
         return self.id_actual - 1
 
     def obtener_todas_listas(self):
-        """
-        Obtiene todas las listas almacenadas.
-        
-        Returns:
-            dict: Diccionario con todas las listas
-        """
+        """Devuelve todas las listas que tenemos."""
         return self.listas
 
     def obtener_lista(self, id_lista):
-        """
-        Obtiene una lista específica por su ID.
-        
-        Args:
-            id_lista: ID de la lista a obtener
-            
-        Returns:
-            dict: Datos de la lista o None si no existe
-        """
+        """ Busca una lista por su número."""
         return self.listas.get(id_lista)
 
     def actualizar_lista(self, id_lista, nombre, articulos):
-        """
-        Actualiza una lista existente.
-        
-        Args:
-            id_lista: ID de la lista a actualizar
-            nombre: Nuevo nombre de la lista
-            articulos: Nueva lista de artículos
-            
-        Returns:
-            bool: True si la actualización fue exitosa, False en caso contrario
-        """
+        """Cambia una lista que ya existe."""
         if id_lista in self.listas:
             self.listas[id_lista] = {"nombre": nombre, "articulos": articulos}
             return True
         return False
 
     def eliminar_lista(self, id_lista):
-        """
-        Elimina una lista existente.
-        
-        Args:
-            id_lista: ID de la lista a eliminar
-            
-        Returns:
-            bool: True si la eliminación fue exitosa, False en caso contrario
-        """
+        """Borra una lista que ya no queremos."""
         if id_lista in self.listas:
             del self.listas[id_lista]
             return True
@@ -135,76 +77,39 @@ class ListaSupermercado:
 
 
 class GestorColas:
-    """
-    Clase que gestiona las diferentes colas del supermercado.
-    """
+    """Esta clase maneja las filas de gente en el supermercado."""
     def __init__(self):
-        """Inicializa las colas del sistema."""
+        """Crea las colas vacías."""
         self.cola_cajas = Queue()
         self.cola_atencion = Queue()
         self.cola_entregas = Queue()
 
     def agregar_a_cajas(self, cliente):
-        """
-        Agrega un cliente a la cola de cajas.
-        
-        Args:
-            cliente: Nombre o identificador del cliente
-        """
+        """Mete a un cliente en la fila para pagar."""
         self.cola_cajas.put(cliente)
 
     def siguiente_cliente_cajas(self):
-        """
-        Obtiene el siguiente cliente en la cola de cajas.
-        
-        Returns:
-            str: Cliente a atender o None si la cola está vacía
-        """
+        """Llama al siguiente cliente para pagar."""
         return self.cola_cajas.get() if not self.cola_cajas.empty() else None
 
     def agregar_a_atencion(self, caso):
-        """
-        Agrega un caso a la cola de atención al cliente.
-        
-        Args:
-            caso: Descripción del caso
-        """
+        """Añade un problema a la fila de atención al cliente."""
         self.cola_atencion.put(caso)
 
     def siguiente_caso_atencion(self):
-        """
-        Obtiene el siguiente caso en la cola de atención.
-        
-        Returns:
-            str: Caso a atender o None si la cola está vacía
-        """
+        """Saca el siguiente problema de la fila de atención."""
         return self.cola_atencion.get() if not self.cola_atencion.empty() else None
 
     def agregar_a_entregas(self, pedido):
-        """
-        Agrega un pedido a la cola de entregas.
-        
-        Args:
-            pedido: Información del pedido a entregar
-        """
+        """ Mete un pedido a la fila de entregas."""
         self.cola_entregas.put(pedido)
 
     def siguiente_entrega(self):
-        """
-        Obtiene la siguiente entrega en la cola.
-        
-        Returns:
-            str: Entrega a procesar o None si la cola está vacía
-        """
+        """Saca el siguiente pedido para entregar."""
         return self.cola_entregas.get() if not self.cola_entregas.empty() else None
 
     def obtener_tamaños_colas(self):
-        """
-        Obtiene el tamaño actual de todas las colas.
-        
-        Returns:
-            dict: Diccionario con el tamaño de cada cola
-        """
+        """Cuenta cuánta gente hay en cada fila."""
         return {
             "cajas": self.cola_cajas.qsize(),
             "atencion": self.cola_atencion.qsize(),

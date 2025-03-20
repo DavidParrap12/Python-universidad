@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Sistema de Gestión de Supermercado
 interfaz gráfica para un sistema de gestión de supermercado
@@ -298,7 +297,7 @@ class AplicacionAcceso:
     Entregas: {tamaños['entregas']} pedidos"""
         messagebox.showinfo("Estado de Colas", mensaje_estado)
 
-"""Llamamos la aplicaciom¿n"""
+"""Llamamos la aplicacion"""
 if __name__ == "__main__":
     raiz = Tk()
     app = AplicacionAcceso(raiz)
