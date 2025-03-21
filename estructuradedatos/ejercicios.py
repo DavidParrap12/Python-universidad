@@ -26,15 +26,23 @@ print(infoEstudiantes)
 infoEstudiantes.update({"Nota": 5})
 print("agregado nota: ", infoEstudiantes)"""
 
-estudiantes = {
-    "estudiante1" : 
-        "nombre" : "",
-        "apellido": "",
-        "edad": 0,
+estudiantes = {}
+
+while True:
+    nombre = input("Ingresa el nombre del estudiante (o 'salir' para detenerse): ").strip().lower()
+    if nombre == 'salir':
+        break
     
-}
-
-def agregar_estudiantes():
-    agregar[estudiantes]
-
-print(estudiantes.keys())
+    apellido = input("Ingresa el apellido del estudiante: ").strip()
+    try:
+        edad = int(input("Ingresa la edad del estudiante: ").strip())
+    except ValueError:
+        print("La edad debe ser un número entero. intentalo de nuevo")
+        continue
+    
+    estudiantes[nombre]={"apellido": apellido, "edad": edad}
+    
+print("\n Informacion del estudiante:")
+for estudiante, datos in estudiantes.items():
+    print(f"Nombre: {estudiante.capitalize()}, Apellido {datos['apellido']}, Edad: {datos['edad']} ")
+    
